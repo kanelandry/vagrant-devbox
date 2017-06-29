@@ -1,0 +1,38 @@
+---
+- name: Create MySQL database for myapp
+  mysql_db: name=t_myapp state=present
+
+- name: Create MySQL user for myapp
+  mysql_user: name=root password= priv=*.*:ALL state=present
+
+- name: Clone myapp database structure and application
+  git: repo=https://username:password@gitlab.com/myapp/coreapp.git
+       dest=/vagrant/myapp
+       update=yes
+  become: true
+  become_user: "{{ www_user }}"
+       
+- name: Import DB 
+  shell: mysql t_myapp < /vagrant/myapp/myapp_tables.sql
+
+- name: Copy across new php-fpm pool config for myapp
+  template:
+    src=php-fpm.conf.j2
+    dest=/etc/php/{{ php_version }}/fpm/pool.d/myapp.conf
+  notify:
+    - restart php-fpm
+
+- name: Copy across new virtual host for myapp
+  template:
+    src=nginx.conf.j2
+    dest=/etc/nginx/sites-available/myapp.conf
+  notify:
+    - restart nginx
+
+- name: Enable new vagrant virtual host for myapp
+  file:
+    src=/etc/nginx/sites-available/myapp.conf
+    dest=/etc/nginx/sites-enabled/myapp.conf
+    state=link
+  notify:
+    - restart nginx
