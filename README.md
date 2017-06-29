@@ -16,9 +16,11 @@ OS: bento/ubuntu-16.04,  Web server: Nginx
  
 # Installation
 1. Move "devbox" and "coreapp" to C:/Users/Administrator/Documents/myapp/
-2. Open all files of "devbox" in a text editor and make the following changes:
-  - replace "myapp" with the actual name of your application on github
-  - in devbox/playbooks/roles/{myapp}/tasks/main.yaml, provide the appropriate username and password to clone your app's source code from gitlab (Note that if your password contains special characters you will have to percent-encode them)
+2. Open "devbox" and make the following changes:
+  - In Vagrantfile and playbooks/vagrant.yaml, replace "myapp" with the actual name of your application on github
+  - In devbox/playbooks/roles/{myapp}/tasks/main.yaml, provide the appropriate username and password to clone your app's source code from gitlab (Note that if your password contains special characters you will have to percent-encode them)
+  - In playbooks/roles/myapp/templates/.env.j2 update the value of the database global vars DB_DATABASE, DB_USERNAME and DB_PASSWORD
+  - Rename playbooks/roles/{myapp}/templates/ to playbooks/roles/{your_app_name_goes_here}/templates/
 3. Launch the command line as admin in C:/Users/Administrator/Documents/myapp/devbox/ and run "vagrant up" 
 4. Open a browser and go to 192.168.50.4:8082
 
