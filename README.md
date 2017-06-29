@@ -25,7 +25,8 @@ OS: bento/ubuntu-16.04,  Web server: Nginx
 4. Open a browser and go to 192.168.50.4:8082
 
 # Maintenance
-If later on, after runnning "vagrant up", you have to bring changes to your local code (C:/Users/Administrator/Documents/myapp/coreapp) and commit them to gitlab, you apply these modifications to the vagrant devbox by launching the command line as admin in C:/Users/Administrator/Documents/myapp/devbox/ and run "vagrant provision" 
+If later on, after runnning "vagrant up", you have to bring changes to your local code (C:/Users/Administrator/Documents/myapp/coreapp) and commit them to gitlab, you apply these modifications to the vagrant devbox by launching the command line as admin in C:/Users/Administrator/Documents/myapp/devbox/ and run "vagrant provision". 
+This will call the ansible provisioner of Vagrant to do the job.
 
 # Miscellaneous
 You can also work directly on the vagrant virtual box through ssh by launching the command line as admin in C:/Users/Administrator/Documents/myapp/devbox/ and run "vagrant ssh".
